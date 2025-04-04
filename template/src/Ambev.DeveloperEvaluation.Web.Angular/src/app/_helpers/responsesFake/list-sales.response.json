@@ -1,0 +1,46 @@
+{
+  "data": {
+    "totalPages": 9,
+    "totalCount": 9,
+    "hasPrevious": false,
+    "hasNext": true,
+    "collection": [
+      {
+        "id": "91f2d026-015a-4941-9dca-1de06d69e175",
+		"date": "2018-01-10T08:14:00",
+		"branchId": "91f2d026-015a-4941-9dca-1de06d69e175",
+		"customerId": "91f2d026-015a-4941-9dca-1de06d69e175",
+		"discount": 5,
+		"percentageDiscount": 0.5,
+		"grossTotal": 4572,
+		"total": 457,
+		"branch": 
+		{
+			"name": "Branch 1"
+		},
+		"customer": 
+		{
+			"name": "Customer 1"
+		}
+      },
+      {
+        "id": "09af49fc-3648-440a-89d0-f5cb959a052b",
+		"branchId": "09af49fc-3648-440a-89d0-f5cb959a052b",
+		"customerId": "09af49fc-3648-440a-89d0-f5cb959a052b",
+		"branch": 
+		{
+			"name": "Branch 2"
+		},
+		"customer": 
+		{
+			"name": "Customer 2"
+		}
+      }
+    ],
+    "pageNumber": 1,
+    "pageSize": 1
+  },
+  "success": true,
+  "message": "",
+  "errors": []
+}

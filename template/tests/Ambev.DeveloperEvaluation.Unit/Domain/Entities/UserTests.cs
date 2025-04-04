@@ -59,7 +59,7 @@ public class UserTests
 
         // Assert
         Assert.True(result.IsValid);
-        Assert.Empty(result.Errors);
+        Assert.Empty(result.ValidationErrorDetailEnumerable);
     }
 
     /// <summary>
@@ -84,6 +84,6 @@ public class UserTests
 
         // Assert
         Assert.False(result.IsValid);
-        Assert.NotEmpty(result.Errors);
+        Assert.NotEmpty(result.ValidationErrorDetailEnumerable);
     }
 }

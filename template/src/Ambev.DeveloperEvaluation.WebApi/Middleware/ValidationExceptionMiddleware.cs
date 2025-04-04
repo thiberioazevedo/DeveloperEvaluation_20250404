@@ -1,6 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.WebApi.Common;
-using FluentValidation;
 using System.Text.Json;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Middleware
@@ -8,6 +7,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Middleware
     public class ValidationExceptionMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly JsonSerializerOptions _jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
         public ValidationExceptionMiddleware(RequestDelegate next)
         {
@@ -20,31 +20,42 @@ namespace Ambev.DeveloperEvaluation.WebApi.Middleware
             {
                 await _next(context);
             }
-            catch (ValidationException ex)
-            {
-                await HandleValidationExceptionAsync(context, ex);
+            catch (Exception exception) {
+                await HandleExceptionAsync(context, exception);
             }
         }
 
-        private static Task HandleValidationExceptionAsync(HttpContext context, ValidationException exception)
+        Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
+            var apiResponse = new ApiResponse { Success = false };
+
+            switch (exception) {
+                case FluentValidation.ValidationException validationException:
+                    apiResponse.Message = validationException.Message;
+                    apiResponse.Errors = validationException.Errors.Select(error => (ValidationErrorDetail)error);
+
+                    break;
+
+                default:
+                    apiResponse.Message = GetLastException(exception).Message;
+                    apiResponse.Errors = new List<ValidationErrorDetail>() { new() { Error = apiResponse.Message, Detail = apiResponse.Message } };
+                    break;
+            }
+
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
 
-            var response = new ApiResponse
-            {
-                Success = false,
-                Message = "Validation Failed",
-                Errors = exception.Errors
-                    .Select(error => (ValidationErrorDetail)error)
-            };
+            return context.Response.WriteAsync(JsonSerializer.Serialize(apiResponse, _jsonOptions));
+        }
 
-            var jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };
+        static Exception GetLastException(Exception exception) {
+            var _exception = exception;
 
-            return context.Response.WriteAsync(JsonSerializer.Serialize(response, jsonOptions));
+            while (_exception.InnerException != null) {
+                _exception = _exception.InnerException;
+            }
+
+            return _exception;
         }
     }
 }

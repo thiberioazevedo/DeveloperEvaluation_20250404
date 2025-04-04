@@ -58,7 +58,7 @@ public class CreateUserCommand : IRequest<CreateUserResult>
         return new ValidationResultDetail
         {
             IsValid = result.IsValid,
-            Errors = result.Errors.Select(o => (ValidationErrorDetail)o)
+            ValidationFailureList = result.Errors
         };
     }
 }

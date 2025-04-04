@@ -1,0 +1,68 @@
+{
+  "data": {
+    "id": "91f2d026-015a-4941-9dca-1de06d69e175",
+    "value": 10,
+    "months": 10,
+    "cdi": 0.9,
+    "tb": 108,
+    "grossValue": 15825.97,
+    "taxPercentage": 0.2,
+    "taxAmount": 3165.19,
+    "netValue": 12660.78,
+    "monthCDBCollection": [
+      {
+        "month": 1,
+        "initialValue": 10,
+        "finalValue": 20.89
+      },
+      {
+        "month": 2,
+        "initialValue": 20.89,
+        "finalValue": 43.64
+      },
+      {
+        "month": 3,
+        "initialValue": 43.64,
+        "finalValue": 91.16
+      },
+      {
+        "month": 4,
+        "initialValue": 91.16,
+        "finalValue": 190.43
+      },
+      {
+        "month": 5,
+        "initialValue": 190.43,
+        "finalValue": 397.81
+      },
+      {
+        "month": 6,
+        "initialValue": 397.81,
+        "finalValue": 831.03
+      },
+      {
+        "month": 7,
+        "initialValue": 831.03,
+        "finalValue": 1736.02
+      },
+      {
+        "month": 8,
+        "initialValue": 1736.02,
+        "finalValue": 3626.55
+      },
+      {
+        "month": 9,
+        "initialValue": 3626.55,
+        "finalValue": 7575.86
+      },
+      {
+        "month": 10,
+        "initialValue": 7575.86,
+        "finalValue": 15825.97
+      }
+    ]
+  },
+  "success": true,
+  "message": "CDB created successfully",
+  "errors": []
+}

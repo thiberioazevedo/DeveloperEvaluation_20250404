@@ -1,0 +1,16 @@
+{
+	"success": true,
+	"message": "",
+	"errors": [],
+	"data":
+	[
+		{
+			"id": "91f2d026-015a-4941-9dca-1de06d69e175",
+			"name": "Customer 1"		
+		},
+		{
+			"id": "09af49fc-3648-440a-89d0-f5cb959a052b",
+			"name": "Customer 2"
+		}
+  ]
+}

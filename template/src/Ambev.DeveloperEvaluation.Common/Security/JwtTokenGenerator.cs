@@ -38,8 +38,12 @@ public class JwtTokenGenerator : IJwtTokenGenerator
     /// <exception cref="ArgumentNullException">Thrown when user or secret key is not provided.</exception>
     public string GenerateToken(IUser user)
     {
+        if (_configuration == null)
+            return string.Empty;
+
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_configuration["Jwt:SecretKey"]);
+        var byteArray = _configuration["Jwt:SecretKey"] ?? string.Empty;
+        var key = Encoding.ASCII.GetBytes(byteArray);
 
         var claims = new[]
         {

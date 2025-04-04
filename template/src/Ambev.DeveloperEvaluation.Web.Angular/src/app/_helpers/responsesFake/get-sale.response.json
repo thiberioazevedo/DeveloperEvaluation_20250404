@@ -1,0 +1,25 @@
+{
+    "data":       
+	{
+        "id": "91f2d026-015a-4941-9dca-1de06d69e175",
+		"branchId": "91f2d026-015a-4941-9dca-1de06d69e175",
+		"customerId": "91f2d026-015a-4941-9dca-1de06d69e175",
+        "value": 10,
+        "months": 10,
+        "cdi": 0.9,
+        "tb": 108,
+        "grossValue": 15825.97,
+        "taxPercentage": 0.2,
+        "taxAmount": 3165.19,
+        "netValue": 12660.78,
+		"saleItemCollection": [
+			{
+				"productId": "91f2d026-015a-4941-9dca-1de06d69e175",
+				"quantity": 9
+			}
+		]
+	},
+    "success": true,
+    "message": "CDB created successfully",
+    "errors": []
+  }

@@ -5,7 +5,13 @@ namespace Ambev.DeveloperEvaluation.Common.Validation;
 public class ValidationResultDetail
 {
     public bool IsValid { get; set; }
-    public IEnumerable<ValidationErrorDetail> Errors { get; set; } = [];
+    public IEnumerable<ValidationErrorDetail> ValidationErrorDetailEnumerable
+    { 
+        get {
+            return ValidationFailureList.Select(o => (ValidationErrorDetail)o);
+        } 
+    }
+    public IList<ValidationFailure> ValidationFailureList { get; set; } = [];
 
     public ValidationResultDetail()
     {
@@ -15,6 +21,6 @@ public class ValidationResultDetail
     public ValidationResultDetail(ValidationResult validationResult)
     {
         IsValid = validationResult.IsValid;
-        Errors = validationResult.Errors.Select(o => (ValidationErrorDetail)o);
+        ValidationFailureList = validationResult.Errors;
     }
 }

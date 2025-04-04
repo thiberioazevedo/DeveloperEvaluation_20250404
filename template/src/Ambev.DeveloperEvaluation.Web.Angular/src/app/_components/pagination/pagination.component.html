@@ -1,0 +1,6 @@
+<div class="pagination-controls" *ngIf="this.apiResponseWithData?.data">
+    <button (click)="previousPage()" [disabled]="this.apiResponseWithData.data.pageNumber === 1">Previous</button>
+    <span>Page {{ this.apiResponseWithData.data.pageNumber }} of {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="this.apiResponseWithData.data.pageNumber === totalPages">Next</button>
+    <div>Total: {{this.apiResponseWithData.data.totalCount}}</div>
+</div>

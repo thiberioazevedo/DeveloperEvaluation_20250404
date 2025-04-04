@@ -1,0 +1,123 @@
+﻿<h1>{{title}}</h1>
+<form *ngIf="!loading" [formGroup]="formSale" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="mb-3 col">
+            <label class="form-label">Branch</label>
+            <select class="form-select form-select-sm" formControlName="branchId" required>
+                <option value="" disabled>Select a branch</option>
+                <option *ngFor="let branch of branchCollection" [value]="branch.id" [selected]="branch.id === formSale.get('branchId')?.value">
+                    {{ branch.name }}
+                </option>
+            </select>
+            <div *ngIf="formSale.get('branchId')?.touched && formSale.get('branchId')?.invalid" class="text-danger">
+                Branch is required.
+            </div>
+        </div>
+        
+        <div class="mb-3 col">
+            <label class="form-label">Customer</label>
+            <select class="form-select form-select-sm" formControlName="customerId" required>
+                <option value="" disabled>Select a customer</option>
+                <option *ngFor="let customer of customerCollection" [value]="customer.id" [selected]="customer.id === formSale.get('customerId')?.value">
+                    {{ customer.name }}
+                </option>
+            </select>
+            <div *ngIf="formSale.get('customerId')?.touched && formSale.get('customerId')?.invalid" class="text-danger">
+                Customer is required.
+            </div>
+        </div>
+
+        <div class="mb-3 col">
+            <label class="form-label">Date</label>
+            <input type="date" class="form-control form-control-sm" formControlName="date" required>
+            <div *ngIf="formSale.get('date')?.touched && formSale.get('date')?.invalid" class="text-danger">
+                Date is required.
+            </div>
+        </div>
+    
+    </div>
+
+    <div class="container table-bordered" *ngIf="editMode()">
+        <div class="row border-bottom bg-header">
+            <div class="col-1 col-sm-1 border-end">Actions</div>
+            <div class="col-8 col-sm-8 border-end">Product</div>
+            <div class="col-1 col-sm-1 border-end">Quantity</div>
+            <div class="col-1 col-sm-1 border-end">Price</div>
+            <div class="col-1 col-sm-1 border-end">Total</div>
+        </div>
+        <div class="row border-bottom" *ngFor="let product of productCollection">
+            <div class="col-1 col-sm-1 border-end">
+                <button type="button" class="btn btn-danger btn-sm" (click)="downItem(product)" [disabled]="getQuantity(product) === 0">-1</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="upItem(product)">+1</button>
+            </div>                
+            <div class="col-8 col-sm-8 border-end">{{product.name}}</div>
+            <div class="col-1 col-sm-1 border-end text-end">{{ getQuantity(product) }}</div>
+            <div class="col-1 col-sm-1 border-end text-end">{{ getPrice(product) | currency: 'USD':'symbol':'1.2-2' }}</div>
+            <div class="col-1 col-sm-1 border-end text-end">{{ getQuantity(product) * getPrice(product)  | currency: 'USD':'symbol':'1.2-2' }}</div>
+        </div>
+        <div class="row border-bottom">
+            <div class="col-1 col-sm-1 border-end"></div>
+            <div class="col-8 col-sm-8 border-end"><strong>Total</strong></div>
+            <div class="col-1 col-sm-1 border-end text-end"><strong>{{ getTotalQuantities() }}</strong></div>
+            <div class="col-1 col-sm-1 border-end text-end"><strong>-</strong></div>
+            <div class="col-1 col-sm-1 border-end text-end"><strong>{{ getTotal() | currency: 'USD':'symbol':'1.2-2' }}</strong></div>
+        </div>
+    </div>  
+
+    <div class="row" *ngIf="editMode() && !changedItemSaleCollection">
+        <div class="mb-3 col">
+            <label class="form-label">Gross Total</label>
+            <div class="form-control form-control-sm bg-light">
+                {{ formSale.get('grossTotal')?.value | currency: 'USD':'symbol':'1.2-2' }}
+            </div>
+        </div>
+        
+        <div class="mb-3 col">
+            <label class="form-label">Discount</label>
+            <div class="form-control form-control-sm bg-light">
+                {{ formSale.get('discount')?.value | currency: 'USD':'symbol':'1.2-2' }}
+            </div>
+        </div>
+        <div class="mb-3 col">
+            <label class="form-label">Percentage Discount</label>
+            <div class="form-control form-control-sm bg-light">
+                {{ formSale.get('percentageDiscount')?.value | number: '1.0-2' }}%
+            </div>
+        </div>
+    
+        <div class="mb-3 col">
+            <label class="form-label">Total</label>
+            <div class="form-control form-control-sm bg-light">
+                {{ formSale.get('total')?.value | currency: 'USD':'symbol':'1.2-2' }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="row border-bottom" *ngIf="loading">
+        <div class="col" class="text-center">
+            <span class="spinner-border spinner-border-lg align-center"></span>
+        </div>
+    </div>
+    
+
+    <div class="container mt-4" *ngIf="editMode() && changedItemSaleCollection">
+        <div class="alert alert-info" role="alert">
+          <h5 class="alert-heading">Hint:</h5>
+          <p class="mb-0">Click the save sale button to fill in the calculated fields</p>
+        </div>
+      </div>
+    
+
+    <div class="mb-3">
+        <button [disabled]="submitting" class="btn btn-primary" (click)="saveSale()">
+            <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
+            Save Sale
+        </button>
+        <button [disabled]="submitting" class="btn btn-secondary" routerLink="/sales/list">
+            Back
+        </button> 
+    </div>
+</form>
+<div *ngIf="loading" class="text-center m-5">
+    <span class="spinner-border spinner-border-lg align-center"></span>
+</div>

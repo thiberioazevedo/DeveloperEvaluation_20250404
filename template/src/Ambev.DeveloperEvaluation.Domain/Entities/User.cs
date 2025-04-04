@@ -3,6 +3,8 @@ using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.Domain.Enums;
 using Ambev.DeveloperEvaluation.Domain.Validation;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
@@ -86,6 +88,16 @@ public class User : BaseEntity, IUser
         CreatedAt = DateTime.UtcNow;
     }
 
+    public User(string username, string email, string phone, string password, UserRole role, UserStatus status)
+    {
+        Username = username;
+        Email = email;
+        Phone = phone;
+        Password = password;
+        Role = role;
+        Status = status;
+    }
+
     /// <summary>
     /// Performs validation of the user entity using the UserValidator rules.
     /// </summary>
@@ -103,15 +115,20 @@ public class User : BaseEntity, IUser
     /// <list type="bullet">Role validity</list>
     /// 
     /// </remarks>
-    public ValidationResultDetail Validate()
+    //public ValidationResultDetail Validate()
+    //{
+    //    var validator = new UserValidator();
+    //    var result = validator.Validate(this);
+    //    return new ValidationResultDetail
+    //    {
+    //        IsValid = result.IsValid,
+    //        ValidationFailureList = result.Errors
+    //    };
+    //}
+
+    public override ValidationResult GetValidationResult()
     {
-        var validator = new UserValidator();
-        var result = validator.Validate(this);
-        return new ValidationResultDetail
-        {
-            IsValid = result.IsValid,
-            Errors = result.Errors.Select(o => (ValidationErrorDetail)o)
-        };
+        return new UserValidator().Validate(this);
     }
 
     /// <summary>

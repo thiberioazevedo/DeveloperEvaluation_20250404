@@ -1,0 +1,61 @@
+﻿<h1>Sales</h1>
+
+
+<div>
+    <a routerLink="../add" class="btn btn-sm btn-success mb-2">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm"></span>
+        <span *ngIf="!loading">Create Sale</span>
+    </a>
+    <!-- <a routerLink=".." class="btn btn-sm btn-success mb-2">Create CDB</a> -->
+</div>
+<div class="table-scroll">
+    <div class="container table-bordered">
+        <div class="row border-bottom bg-header">
+            <div class="col">Actions</div>
+            <div class="col">Number</div>
+            <div class="col">Date</div>
+            <div class="col">Branch</div>
+            <div class="col">Customer</div>
+            <!-- <div class="col">Discount</div>
+            <div class="col">Discount %</div>
+            <div class="col">Gross Total</div> -->
+            <div class="col">Total</div>
+            <div class="col">Status</div>
+        </div>
+        <div class="row border-bottom" *ngFor="let sale of apiResponsePaginatedListWithData?.data?.collection">
+            <div class="col">
+                <!-- <a routerLink="../{{sale.id}}" class="btn btn-sm btn-primary me-1">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!loading">Edit</span>                    
+                </a> -->
+                <button (click)="edit(sale)" [disabled]="sale.cancelled" class="btn btn-sm btn-primary me-1">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!loading">Edit</span>
+                </button>                
+                <button (click)="cancel(sale)" [disabled]="sale.cancelled" class="btn btn-sm btn-secondary btn-delete-sale">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!loading">Cancel</span>
+                </button>
+                <button (click)="delete(sale)" class="btn btn-sm btn-danger btn-cancel-sale">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!loading">Delete</span>
+                </button>                
+            </div>
+            <div class="col">{{sale.number}}</div>
+            <div class="col">{{sale.date | date: 'dd/MM/yyyy'}}</div>
+            <div class="col">{{sale.branch?.name}}</div>
+            <div class="col">{{sale.customer?.name}}</div>
+            <!-- <div class="col">{{sale?.discount | currency: 'USD':'symbol':'1.2-2'}}</div>
+            <div class="col">{{sale?.percentageDiscount ?? 0 * 100 | number: '1.0-2'}}</div>
+            <div class="col">{{sale?.grossTotal | currency: 'USD':'symbol':'1.2-2'}}</div> -->
+            <div class="col">{{sale.total | currency: 'USD':'symbol':'1.2-2'}}</div>
+            <div class="col">{{sale.cancelled ? 'Cancelled' : 'Actived'}}</div>
+        </div>
+    </div>
+</div>
+
+<app-pagination
+  [apiResponseWithData]="apiResponsePaginatedListWithData"
+  (pageChange)="onPageChange($event)">
+</app-pagination>
+ 

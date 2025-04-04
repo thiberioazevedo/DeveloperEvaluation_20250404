@@ -1,0 +1,16 @@
+{
+    "data": {
+        "data": {
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI4Y2Q5YTRhYy1iN2Y4LTQwY2UtYjZiZC0xYjlhOTYxMDBiNmUiLCJ1bmlxdWVfbmFtZSI6InRoaWJlcmlvIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzQyNDMzNzUyLCJleHAiOjE3NDI0NjI1NTIsImlhdCI6MTc0MjQzMzc1Mn0.Uj9a1rUVvsOdTmZJ_O9QQgmLhoD7ljICV-4VnQ5d6Ls",
+            "email": "thiberio.azevedo@gmail.com",
+            "name": "thiberio",
+            "role": "Customer"
+        },
+        "success": true,
+        "message": "User authenticated successfully",
+        "errors": []
+    },
+    "success": true,
+    "message": "",
+    "errors": []
+}
